@@ -13,8 +13,12 @@ def format_temperature(temp):
     Returns:
         A string contain the temperature and "degrees Celcius."
     """
-    return f"{temp}{DEGREE_SYMBOL}"
-
+    try:
+        float(temp)
+        return f"{temp}{DEGREE_SYMBOL}"
+    except ValueError:
+        raise ValueError("The provided temperature must be a valid number.")
+    
 
 def convert_date(iso_string):
     """Converts and ISO formatted date into a human-readable format.
@@ -24,7 +28,11 @@ def convert_date(iso_string):
     Returns:
         A date formatted like: Weekday Date Month Year e.g. Tuesday 06 July 2021
     """
-    pass
+    try:
+        date_object = datetime.fromisoformat(iso_string)
+        return date_object.strftime("%A %d %B %Y")
+    except ValueError:
+        raise ValueError("The provided date must be in ISO format (YYYY-MM-DD).")
 
 
 def convert_f_to_c(temp_in_fahrenheit):
@@ -35,7 +43,9 @@ def convert_f_to_c(temp_in_fahrenheit):
     Returns:
         A float representing a temperature in degrees Celcius, rounded to 1 decimal place.
     """
-    pass
+    temp_in_celcius = (temp_in_fahrenheit - 32) * 5.0 / 9.0
+    return round(temp_in_celcius, 1)
+   
 
 
 def calculate_mean(weather_data):
