@@ -43,7 +43,7 @@ def convert_f_to_c(temp_in_fahrenheit):
     Returns:
         A float representing a temperature in degrees Celcius, rounded to 1 decimal place.
     """
-    temp_in_celcius = (temp_in_fahrenheit - 32) * 5.0 / 9.0
+    temp_in_celcius = float((temp_in_fahrenheit - 32) * 5.0 / 9.0)
     return round(temp_in_celcius, 1)
    
 
