@@ -52,6 +52,7 @@ def convert_f_to_c(temp_in_fahrenheit):
     temp_in_celcius = (temp_in_fahrenheit - 32) * 5.0 / 9.0
     return round(temp_in_celcius, 1)
 
+
 def calculate_mean(weather_data):
     """Calculates the mean value from a list of numbers.
 
@@ -60,7 +61,20 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    mean_value = sum(weather_data) / len(weather_data)
+    converted_data = []
+
+    for item in weather_data:
+        if isinstance(item, str):
+            try:
+                item = float(item) if '.' in item else int(item)
+            except ValueError:
+                raise ValueError(f"Cannot convert '{item}' to a number.")
+        elif not isinstance(item, (int, float)):
+            raise ValueError(f"Invalid type: {item} is not a number.")
+        
+        converted_data.append(item)
+
+    mean_value = sum(converted_data) / len(converted_data)
     return mean_value
 
 
