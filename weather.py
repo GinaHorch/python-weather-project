@@ -64,11 +64,13 @@ def calculate_mean(weather_data):
 
     converted_data = [] #test with string input kept failing, so convert data first before calculating mean
 
+
     for item in weather_data:
         if isinstance(item, str):
             try:
                 item = float(item) if '.' in item else int(item)
             except ValueError:
+
                 raise ValueError(f"Cannot convert '{item} to a number.")
         elif not isinstance(item, (int, float)):
             raise ValueError(f"Invalid type: '{item}' is not a number")
@@ -76,6 +78,7 @@ def calculate_mean(weather_data):
         converted_data.append(item)
 
     mean_value = sum(converted_data) / len(converted_data) #don't forget using the converted data, otherwise you keep failing the test
+
     return mean_value
 
 
