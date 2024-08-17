@@ -61,18 +61,14 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-<<<<<<< HEAD
+
     converted_data = [] #test with string input kept failing, so convert data first before calculating mean
-=======
-    converted_data = []
->>>>>>> 9589dc42ac1cf3aaaf451ce90f25ae12d63bee95
 
     for item in weather_data:
         if isinstance(item, str):
             try:
                 item = float(item) if '.' in item else int(item)
             except ValueError:
-<<<<<<< HEAD
                 raise ValueError(f"Cannot convert '{item} to a number.")
         elif not isinstance(item, (int, float)):
             raise ValueError(f"Invalid type: '{item}' is not a number")
@@ -80,15 +76,6 @@ def calculate_mean(weather_data):
         converted_data.append(item)
 
     mean_value = sum(converted_data) / len(converted_data) #don't forget using the converted data, otherwise you keep failing the test
-=======
-                raise ValueError(f"Cannot convert '{item}' to a number.")
-        elif not isinstance(item, (int, float)):
-            raise ValueError(f"Invalid type: {item} is not a number.")
-        
-        converted_data.append(item)
-
-    mean_value = sum(converted_data) / len(converted_data)
->>>>>>> 9589dc42ac1cf3aaaf451ce90f25ae12d63bee95
     return mean_value
 
 
@@ -127,8 +114,27 @@ def find_min(weather_data):
     Returns:
         The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    pass
+    if not weather_data:
+        return ()   #check if the list is empty, make sure you return an empty tuple if the list is empty
+    
+    for index, value in enumerate(weather_data):    #convert all string numbers to floats
+        if isinstance(value, str):
+            try:
+                weather_data[index] = float(value)
+            except ValueError:
+                raise ValueError(f"Cannot convert '{value}' to a number.")
+        elif not isinstance(value, (int, float)):
+            raise ValueError(f"Invalid type: {value} is not a number")
 
+    min_value = weather_data[0]     #tests fail if you don't initialise the minimum value and index
+    min_index = 0
+
+    for index, value in enumerate(weather_data):    #enumerate gives you value and index
+        if value <= min_value:
+            min_value = value
+            min_index = index
+
+    return min_value, min_index
 
 def find_max(weather_data):
     """Calculates the maximum value in a list of numbers.
@@ -138,7 +144,27 @@ def find_max(weather_data):
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    pass
+    if not weather_data:
+        return ()   #check if the list is empty, make sure you return an empty tuple if the list is empty
+    
+    for index, value in enumerate(weather_data):    #convert all string numbers to floats
+        if isinstance(value, str):
+            try:
+                weather_data[index] = float(value)
+            except ValueError:
+                raise ValueError(f"Cannot convert '{value}' to a number.")
+        elif not isinstance(value, (int, float)):
+            raise ValueError(f"Invalid type: {value} is not a number")
+
+    max_value = weather_data[-1]     #tests fail if you don't initialise the minimum value and index
+    max_index = -1
+
+    for index, value in enumerate(weather_data):    #enumerate gives you value and index
+        if value >= max_value:
+            max_value = value
+            max_index = index
+
+    return max_value, max_index
 
 
 def generate_summary(weather_data):
