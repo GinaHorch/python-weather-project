@@ -30,7 +30,7 @@ def convert_date(iso_string):
     """
     try:
         date_object = datetime.fromisoformat(iso_string)
-        return date_object.strftime("%A %d %B %Y")
+        return date_object.strftime("%A %d %B %Y") 
     except ValueError:
         raise ValueError("The provided date must be in ISO format (YYYY-MM-DD).")
 
@@ -60,7 +60,20 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    mean_value = sum(weather_data) / len(weather_data)
+    converted_data = [] #test with string input kept failing, so convert data first before calculating mean
+
+    for item in weather_data:
+        if isinstance(item, str):
+            try:
+                item = float(item) if '.' in item else int(item)
+            except ValueError:
+                raise ValueError(f"Cannot convert '{item} to a number.")
+        elif not isinstance(item, (int, float)):
+            raise ValueError(f"Invalid type: '{item}' is not a number")
+        
+        converted_data.append(item)
+
+    mean_value = sum(converted_data) / len(converted_data) #don't forget using the converted data, otherwise you keep failing the test
     return mean_value
 
 
@@ -72,8 +85,24 @@ def load_data_from_csv(csv_file):
     Returns:
         A list of lists, where each sublist is a (non-empty) line in the csv file.
     """
-    pass
+    
+    data_list = []
 
+    try:
+        with open(csv_file, mode='r', newline='') as file:
+            csv_reader = csv.reader(file)
+            next(csv_reader) #skip the header row, otherwise you get an AssertionError
+            for row in csv_reader:
+                if row: #make sure the row is not empty
+                    row[1] = int(row[1]) #kept getting an error that the lists differ from the expected output
+                    row[2] = int(row[2])
+                    data_list.append(row)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file at {csv_file} does not exist.")
+    except Exception as e:
+        raise Exception(f"An error occurred while reading the CSV file: {e}")
+    
+    return data_list
 
 def find_min(weather_data):
     """Calculates the minimum value in a list of numbers.
