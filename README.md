@@ -4,5 +4,7 @@ Starter code for the Plus Weather project.
 
 ## TODO
 
-- [ ] Implement the methods in `weather.py`.
-- [ ] Verify that everything works as intended by running the tests with `python run_tests.py`.
+- [X] Implement the methods in `weather.py`.
+- [X] Verify that everything works as intended by running the tests with `python run_tests.py`.
+
+![Screenshot of green ticks running all tests](/Users/ginahorch/SheCodes/python/python-weather-project/Screen Shot 2024-08-18.png)
