@@ -39,6 +39,9 @@ class GenerateSummaryTests(unittest.TestCase):
         with open("tests/expected_output/example_one_summary.txt", encoding="utf8") as txt_file:
             expected_result = txt_file.read()
         result = weather.generate_summary(self.example_one)
+        print("Expected:", expected_result)
+        print("Actual:", result)
+        assert expected_result == result, f"Expected: {expected_result!r}, but got: {result!r}"
         self.assertEqual(expected_result, result)
 
     def test_generate_summary_example_two(self):
