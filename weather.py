@@ -64,7 +64,6 @@ def calculate_mean(weather_data):
 
     converted_data = [] #test with string input kept failing, so convert data first before calculating mean
 
-
     for item in weather_data:
         if isinstance(item, str):
             try:
@@ -212,6 +211,41 @@ def generate_summary(weather_data):
     return summary
     
 
+# def generate_daily_summary(weather_data):
+#     """Outputs a daily summary for the given weather data.
+
+#     Args:
+#         weather_data: A list of lists, where each sublist represents a day of weather data.
+#     Returns:
+#         A string containing the summary information.
+#     """
+#     if not weather_data:
+#         return ""
+    
+#     #create a list so the function can iterate over each day's data
+#     daily_summaries = []
+
+#     #iterate through weather data
+#     for row in weather_data:
+#         if row:
+#             date = row[0]
+#             min_temp = row[1]
+#             max_temp = row[2]
+
+#             #format dates and temperatures
+#             min_temperature_formatted = format_temperature(convert_f_to_c(min_temp))
+#             max_temperature_formatted = format_temperature(convert_f_to_c(max_temp))
+#             date_formatted = convert_date(date)
+    
+#         daily_summary = (
+#                 f'---- {date_formatted} ----\n'
+#                 f'  Minimum Temperature: {min_temperature_formatted}\n'
+#                 f'  Maximum Temperature: {max_temperature_formatted}\n'
+#         )
+#         daily_summaries.append(daily_summary)
+
+#     return "\n\n".join(daily_summaries)
+
 def generate_daily_summary(weather_data):
     """Outputs a daily summary for the given weather data.
 
@@ -220,4 +254,22 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
+    if not weather_data:
+        return ""
+
+    daily_summaries = []
+    
+    for row in weather_data:
+        date_formatted = convert_date(row[0])
+        min_temperature_formatted = format_temperature(convert_f_to_c(row[1]))
+        max_temperature_formatted = format_temperature(convert_f_to_c(row[2]))
+        
+        daily_summary = (
+            f"---- {date_formatted} ----\n"
+            f"  Minimum Temperature: {min_temperature_formatted}\n"
+            f"  Maximum Temperature: {max_temperature_formatted}\n"
+        )
+        daily_summaries.append(daily_summary)
+    
+    # Join all summaries and add an extra newline at the end
+    return "\n".join(daily_summaries) + "\n"
