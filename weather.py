@@ -169,8 +169,8 @@ def find_max(weather_data):
 
     return max_value, max_index
 
-
 def generate_summary(weather_data):
+    # print("generate_summary function called")
     """Outputs a summary for the given weather data.
 
     Args:
@@ -178,8 +178,39 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
-
+    # make sure that the list isn't empty
+    # print("Weather Data Input:", weather_data)
+    if not weather_data:
+        return ()
+    #specify where the data is located
+    min_temps = [day[1] for day in weather_data]
+    max_temps = [day[2] for day in weather_data]
+    dates = [day[0] for day in weather_data]
+    #find minimum and maximum temperatures and their corresponding index location in the list
+    min_temperature, min_index = find_min(min_temps)
+    max_temperature, max_index = find_max(max_temps)
+    # print("Min Temp:", min_temperature, "at index", min_index)
+    #calculate average temperatures
+    avg_min_temperature = calculate_mean(min_temps)
+    avg_max_temperature = calculate_mean(max_temps)
+    #format dates and temperatures
+    min_temperature_formatted = format_temperature(convert_f_to_c(min_temperature))
+    max_temperature_formatted = format_temperature(convert_f_to_c(max_temperature))
+    avg_min_temperature_formatted = format_temperature(convert_f_to_c(avg_min_temperature))
+    avg_max_temperature_formatted = format_temperature(convert_f_to_c(avg_max_temperature))
+    min_date_formatted = convert_date(dates[min_index])
+    max_date_formatted = convert_date(dates[max_index])
+    #summary string including extra whitespace before 'The' - it continued failing until this was identified.
+    summary = (
+        f"{len(weather_data)} Day Overview\n"
+        f"  The lowest temperature will be {min_temperature_formatted}, and will occur on {min_date_formatted}.\n"
+        f"  The highest temperature will be {max_temperature_formatted}, and will occur on {max_date_formatted}.\n"
+        f"  The average low this week is {avg_min_temperature_formatted}.\n"
+        f"  The average high this week is {avg_max_temperature_formatted}.\n"
+    )
+    # print("Summary generated:", summary)
+    return summary
+    
 
 def generate_daily_summary(weather_data):
     """Outputs a daily summary for the given weather data.
